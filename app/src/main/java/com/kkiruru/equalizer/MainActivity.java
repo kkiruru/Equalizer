@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -56,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				Log.d("eq", "onItemSelected position " + position + ", id " + id);
-
 				mEqualizer.usePreset((short) position);
-
 				Equalizer.Settings setting = mEqualizer.getProperties();
 				Log.d("eq", "setting " + setting.toString());
+
+				updateBandValue();
 			}
 
 			@Override
@@ -123,6 +124,37 @@ public class MainActivity extends AppCompatActivity {
 			mEqualizer = new Equalizer(0, mMediaPlayer.getAudioSessionId());
 			mEqualizer.setEnabled(true);
 		}
+	}
+
+
+	private String getBandLevel(short index) {
+
+		StringBuilder bandInfo = new StringBuilder();
+
+		int freqRange[] = mEqualizer.getBandFreqRange(index);
+		bandInfo.append(freqRange[0] + "  ~  " + freqRange[1]);
+		bandInfo.append("   [ " + mEqualizer.getBandLevel(index) + " ]");
+
+		return bandInfo.toString();
+	}
+
+
+	private void updateBandValue() {
+
+		TextView band1 = findViewById(R.id.band1);
+		band1.setText(getBandLevel((short)0));
+
+		TextView band2 = findViewById(R.id.band2);
+		band2.setText(getBandLevel((short)1));
+
+		TextView band3 = findViewById(R.id.band3);
+		band3.setText(getBandLevel((short)2));
+
+		TextView band4 = findViewById(R.id.band4);
+		band4.setText(getBandLevel((short)3));
+
+		TextView band5 = findViewById(R.id.band5);
+		band5.setText(getBandLevel((short)4));
 	}
 
 }

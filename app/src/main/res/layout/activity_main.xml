@@ -35,9 +35,43 @@
 
 	<Spinner
 		android:id="@+id/spinner"
-		android:layout_marginTop="20dp"
 		android:layout_width="wrap_content"
-		android:layout_height="30dp" />
+		android:layout_height="30dp"
+		android:layout_marginTop="20dp"/>
 
+	<TextView
+		android:id="@+id/band1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="band1"
+		android:textSize="15dp"/>
+
+	<TextView
+		android:id="@+id/band2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="band2"
+		android:textSize="15dp"/>
+
+	<TextView
+		android:id="@+id/band3"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="band3"
+		android:textSize="15dp"/>
+
+	<TextView
+		android:id="@+id/band4"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="band4"
+		android:textSize="15dp"/>
+
+	<TextView
+		android:id="@+id/band5"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="band5"
+		android:textSize="15dp"/>
 
 </LinearLayout>
