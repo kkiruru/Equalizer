@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.NumberPicker;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 	Equalizer mEqualizer;
 	MediaPlayer mMediaPlayer;
+	Spinner mSpinner;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,27 +41,31 @@ public class MainActivity extends AppCompatActivity {
 			e.printStackTrace();
 		}
 
-
-		NumberPicker numberPicker = findViewById(R.id.numberPicker);
 		final List<String> presetNames = new ArrayList<>();
 		int numOfPresets = mEqualizer.getNumberOfPresets();
 		for (short p = 0; p < numOfPresets; p++) {
 			presetNames.add(mEqualizer.getPresetName(p));
 			Log.d("eq", "[" + p + "] presetName " + mEqualizer.getPresetName(p));
 		}
-		numberPicker.setMinValue(0);
-		numberPicker.setMaxValue(presetNames.size()-1);
-		numberPicker.setFormatter(new NumberPicker.Formatter() {
+
+		mSpinner = findViewById(R.id.spinner);
+		ArrayAdapter spinnerAdapter;
+		spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, presetNames);
+		mSpinner.setAdapter(spinnerAdapter);
+		mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
-			public String format(int value) {
-				return presetNames.get(value);
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				Log.d("eq", "onItemSelected position " + position + ", id " + id);
+
+				mEqualizer.usePreset((short) position);
+
+				Equalizer.Settings setting = mEqualizer.getProperties();
+				Log.d("eq", "setting " + setting.toString());
 			}
-		});
-		numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
 
 			@Override
-			public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal){
-				Log.d("eq", "onValueChange " + oldVal + " > "+ newVal);
+			public void onNothingSelected(AdapterView<?> parent) {
+				Log.d("eq", "onNothingSelected");
 			}
 		});
 
@@ -90,30 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
 	public void OnClickStop(View view) {
 		stop();
-	}
-
-
-	public void onClickPreset(View view){
-
-		switch (view.getId()){
-			case R.id.preset1:
-				mEqualizer.usePreset((short)0);
-				break;
-			case R.id.preset2:
-				mEqualizer.usePreset((short)1);
-				break;
-			case R.id.preset3:
-				mEqualizer.usePreset((short)2);
-				break;
-			case R.id.preset4:
-				mEqualizer.usePreset((short)3);
-				break;
-			case R.id.preset5:
-				mEqualizer.usePreset((short)4);
-				break;
-		}
-		Equalizer.Settings setting = mEqualizer.getProperties();
-		Log.d("eq", "setting " + setting.toString());
 	}
 
 	private void play(int selNo) {

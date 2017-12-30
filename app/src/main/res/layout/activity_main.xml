@@ -33,58 +33,11 @@
 		android:layout_height="wrap_content"
 		android:text="ToggleButton"/>
 
-
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_horizontal"
-		android:orientation="horizontal">
-
-		<TextView
-			android:id="@+id/preset1"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:onClick="onClickPreset"
-			android:text="Preset1"
-			android:textSize="15dp"/>
-
-		<TextView
-			android:id="@+id/preset2"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:onClick="onClickPreset"
-			android:text="Preset2"
-			android:textSize="15dp"/>
-
-		<TextView
-			android:id="@+id/preset3"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:onClick="onClickPreset"
-			android:text="Preset3"
-			android:textSize="15dp"/>
-
-		<TextView
-			android:id="@+id/preset4"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:onClick="onClickPreset"
-			android:text="Preset4"
-			android:textSize="15dp"/>
-
-		<TextView
-			android:id="@+id/preset5"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:onClick="onClickPreset"
-			android:text="Preset5"
-			android:textSize="15dp"/>
+	<Spinner
+		android:id="@+id/spinner"
+		android:layout_marginTop="20dp"
+		android:layout_width="wrap_content"
+		android:layout_height="30dp" />
 
 
-	</LinearLayout>
-
-	<NumberPicker
-		android:id="@+id/numberPicker"
-		android:layout_width="match_parent"
-		android:layout_height="63dp"/>
 </LinearLayout>
