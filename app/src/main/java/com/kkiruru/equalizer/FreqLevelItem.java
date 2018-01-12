@@ -2,6 +2,7 @@ package com.kkiruru.equalizer;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,10 +14,15 @@ import android.widget.TextView;
  */
 
 public class FreqLevelItem extends LinearLayout {
-    Band band;
+    private Band band;
+    private SeekBar mSeekBar;
 
-    SeekBar mSeekBar;
-    TextView level;
+    private TextView mCenterFreq;
+    private TextView mLevelMin;
+    private TextView mLevelMax;
+
+    private TextView mLevel;
+
 
     public FreqLevelItem(Context context) {
         this(context, null);
@@ -24,7 +30,6 @@ public class FreqLevelItem extends LinearLayout {
 
     public FreqLevelItem(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        initView();
     }
 
     public FreqLevelItem(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -36,15 +41,19 @@ public class FreqLevelItem extends LinearLayout {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rootView = layoutInflater.inflate(R.layout.freq_level_item, this, false);
 
-        level = rootView.findViewById(R.id.level);
+        mCenterFreq = rootView.findViewById(R.id.centerFreq);
+        mLevelMin = rootView.findViewById(R.id.levelMin);
+        mLevelMax = rootView.findViewById(R.id.levelMax);
+
+        mLevel = rootView.findViewById(R.id.currentLevel);
         mSeekBar = rootView.findViewById(R.id.seekBar);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (band != null) {
-                    level.setText(i + band.rangeMin);
+                    mLevel.setText("" + (i + band.rangeMin));
                 } else {
-                    level.setText(i);
+                    mLevel.setText("" + i);
                 }
             }
 
@@ -64,8 +73,23 @@ public class FreqLevelItem extends LinearLayout {
     public void setLevelInfo(Band band) {
         this.band = band;
 
+        mCenterFreq.setText(displayNameOfHz(band.centerFreq));
+
+        mLevelMin.setText("" + band.rangeMin);
+        mLevelMax.setText("" + band.rangeMax);
+
         mSeekBar.setMax(band.rangeMax - band.rangeMin);
         mSeekBar.setProgress(band.level - band.rangeMin);
+    }
+
+    private String displayNameOfHz(int freq) {
+        String display = String.valueOf(freq) + "Hz";
+        if (1000 * 1000 < freq) {
+            display = String.format("%.1f", (freq / 1000) / 1000f) + "MHz";
+        } else if (1000 < freq) {
+            display = String.format("%.1f", freq / 1000f) + "KHz";
+        }
+        return display;
     }
 
 }
