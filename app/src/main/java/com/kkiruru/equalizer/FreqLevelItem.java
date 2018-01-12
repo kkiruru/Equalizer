@@ -25,6 +25,7 @@ public class FreqLevelItem extends LinearLayout {
 
     interface OnBandLevelChangeListener {
         void onBandLevelChange(View band, short level);
+
         void onBandLevelChangeStop();
     }
 
@@ -95,11 +96,13 @@ public class FreqLevelItem extends LinearLayout {
     }
 
     private String displayNameOfHz(int freq) {
-        String display = String.valueOf(freq) + "Hz";
-        if (1000 * 1000 < freq) {
+        String display = String.valueOf(freq) + "mHz";
+        if (1000 * 1000 * 1000 < freq) {
             display = String.format("%.1f", (freq / 1000) / 1000f) + "MHz";
+        } else if (1000 * 1000 < freq) {
+            display = String.format("%.1f", (freq / 1000) / 1000f) + "KHz";
         } else if (1000 < freq) {
-            display = String.format("%.1f", freq / 1000f) + "KHz";
+            display = String.format("%d", freq / 1000) + "Hz";
         }
         return display;
     }
