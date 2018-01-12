@@ -80,23 +80,20 @@ public class EqualizerController extends LinearLayout {
         mPreset = 0;
 
         int numOfBands = mEqualizer.getNumberOfBands();
-
         for (short i = 0; i < numOfBands; i++) {
             int centerFreq = mEqualizer.getCenterFreq(i);
             short bandLevel = mEqualizer.getBandLevel(i);
+            int freqRange[] = mEqualizer.getBandFreqRange(i);
+            short[] bandLevelRange = mEqualizer.getBandLevelRange();
+            int currentPreset = mEqualizer.getCurrentPreset();
 
             Log.d("eq", "band[" + i + "] centerFreq " + centerFreq + ", bandLevel " + bandLevel);
-
-            int freqRange[] = mEqualizer.getBandFreqRange(i);
             for (int j = 0; j < freqRange.length; j++) {
                 Log.d("eq", "__ freqRange[" + j + "] " + "" + freqRange[j]);
             }
-            short[] bandLevelRange = mEqualizer.getBandLevelRange();
             for (int j = 0; j < bandLevelRange.length; j++) {
                 Log.d("eq", "__ bandLevelRange[" + j + "] " + "" + bandLevelRange[j]);
             }
-
-            int currentPreset = mEqualizer.getCurrentPreset();
             Log.d("eq", "currentPreset " + currentPreset);
 
             Band band = new Band(centerFreq, bandLevel, freqRange, bandLevelRange[0], bandLevelRange[bandLevelRange.length - 1]);
@@ -108,7 +105,7 @@ public class EqualizerController extends LinearLayout {
             freqLevelItems.add(freqLevelItem);
         }
 
-        displayBandLevel();
+        printBandLevelInfo();
     }
 
     private void initView() {
@@ -135,9 +132,9 @@ public class EqualizerController extends LinearLayout {
         mEqualizer.usePreset((short) mPreset);
 
         Equalizer.Settings setting = mEqualizer.getProperties();
-        Log.d("eq", "setting " + setting.toString());
-        updateBandValue();
-        displayBandLevel();
+        updateBandLevels(setting.bandLevels);
+
+        printBandLevelInfo();
     }
 
 
@@ -151,7 +148,6 @@ public class EqualizerController extends LinearLayout {
         }
     }
 
-
     public void updateAudioSessionId(int id) {
         if (id != mAudioSession) {
             mEqualizer.setEnabled(false);
@@ -161,6 +157,20 @@ public class EqualizerController extends LinearLayout {
         enableEffect(mToggleEffect.getCheckedRadioButtonId() == R.id.on);
         mAudioSession = id;
     }
+
+
+    private void updateBandLevels(short[] bandLevels) {
+
+        if (freqLevelItems.size() != bandLevels.length) {
+            return;
+        }
+
+        for (int i = 0; i < bandLevels.length; i++) {
+            FreqLevelItem freqLevelItem = freqLevelItems.get(i);
+            freqLevelItem.setBandLevel(bandLevels[i]);
+        }
+    }
+
 
     private String getBandLevel(short index) {
 
@@ -174,7 +184,7 @@ public class EqualizerController extends LinearLayout {
     }
 
 
-    private void displayBandLevel() {
+    private void printBandLevelInfo() {
         int numOfBands = mEqualizer.getNumberOfBands();
 
         for (short i = 0; i < numOfBands; i++) {
@@ -201,9 +211,5 @@ public class EqualizerController extends LinearLayout {
 
     }
 
-
-    private void updateBandValue() {
-
-    }
 
 }

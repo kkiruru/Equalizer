@@ -92,4 +92,9 @@ public class FreqLevelItem extends LinearLayout {
         return display;
     }
 
+    public void setBandLevel(short level){
+        band.level = level;
+        setLevelInfo(band);
+    }
+
 }
