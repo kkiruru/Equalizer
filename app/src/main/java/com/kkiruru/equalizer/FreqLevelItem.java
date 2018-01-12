@@ -23,6 +23,13 @@ public class FreqLevelItem extends LinearLayout {
 
     private TextView mLevel;
 
+    interface OnBandLevelChangeListener {
+        void onBandLevelChange(View band, short level);
+        void onBandLevelChangeStop();
+    }
+
+    OnBandLevelChangeListener mBandLevelChangeListener;
+
 
     public FreqLevelItem(Context context) {
         this(context, null);
@@ -55,6 +62,9 @@ public class FreqLevelItem extends LinearLayout {
                 } else {
                     mLevel.setText("" + i);
                 }
+                if (mBandLevelChangeListener != null) {
+                    mBandLevelChangeListener.onBandLevelChange(FreqLevelItem.this, (short) (i + band.rangeMin));
+                }
             }
 
             @Override
@@ -64,7 +74,9 @@ public class FreqLevelItem extends LinearLayout {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                if (mBandLevelChangeListener != null) {
+                    mBandLevelChangeListener.onBandLevelChangeStop();
+                }
             }
         });
         addView(rootView);
@@ -92,9 +104,13 @@ public class FreqLevelItem extends LinearLayout {
         return display;
     }
 
-    public void setBandLevel(short level){
+    public void setBandLevel(short level) {
         band.level = level;
         setLevelInfo(band);
+    }
+
+    public void setBandLevelChangeListener(OnBandLevelChangeListener listener) {
+        mBandLevelChangeListener = listener;
     }
 
 }

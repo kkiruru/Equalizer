@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void play(int selNo) {
         stop();
-        mMediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.song1);
+        mMediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.the_dlx_two_kids);
         mMediaPlayer.start();
 
         Log.d("eq", "audioSessionId " + mMediaPlayer.getAudioSessionId());
