@@ -1,4 +1,4 @@
-package com.kkiruru.equalizer;
+package com.kkiruru.equalizer.view.main;
 
 import android.annotation.TargetApi;
 import android.media.MediaPlayer;
@@ -12,6 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import com.kkiruru.equalizer.model.Band;
+import com.kkiruru.equalizer.R;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View{
 	MediaPlayer mMediaPlayer;

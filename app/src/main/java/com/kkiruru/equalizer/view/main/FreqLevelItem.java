@@ -1,13 +1,15 @@
-package com.kkiruru.equalizer;
+package com.kkiruru.equalizer.view.main;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.kkiruru.equalizer.R;
+import com.kkiruru.equalizer.model.Band;
 
 /**
  * Created by 1100416 on 2018. 1. 11..

@@ -1,4 +1,4 @@
-package com.kkiruru.equalizer;
+package com.kkiruru.equalizer.model;
 
 /**
  * Created by 1100416 on 2018. 1. 11..

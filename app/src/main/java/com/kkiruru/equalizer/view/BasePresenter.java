@@ -1,4 +1,4 @@
-package com.kkiruru.equalizer;
+package com.kkiruru.equalizer.view;
 
 /**
  * Created by 1100416 on 2018. 1. 15..
@@ -7,11 +7,11 @@ package com.kkiruru.equalizer;
 public class BasePresenter<T extends BaseView> {
 	protected T mView;
 
-	void attachView(T view){
+	final public void attachView(T view){
 		mView = view;
 	}
 
-	void detachView(){
+	final public void detachView(){
 		mView = null;
 	}
 }
