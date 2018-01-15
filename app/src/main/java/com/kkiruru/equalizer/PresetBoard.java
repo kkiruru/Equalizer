@@ -22,5 +22,4 @@ public class PresetBoard {
     int getCurrentPreset(){
         return currentPreset;
     }
-
 }
